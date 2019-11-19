@@ -1,5 +1,7 @@
 # SOAP
-Simple HTTP SOAP client library for Go. We solve common problem of consuming a SOAP-based web service, in distributed systems and application architecture so you can focus on delivering business value.
+[![Build Status](https://travis-ci.org/mencosk/soap.svg?branch=master)](https://travis-ci.org/mencosk/soap)
+
+Simple HTTP SOAP client package for Go. We solve common problem of consuming a SOAP-based web service, in distributed systems and application architecture so you can focus on delivering business value.
 
 ## News
 * v1.0 released on Nov 19th, 2019.
