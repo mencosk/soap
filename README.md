@@ -1,5 +1,6 @@
 # SOAP
 [![Build Status](https://travis-ci.org/mencosk/soap.svg?branch=master)](https://travis-ci.org/mencosk/soap)
+[![Coverage Status](https://coveralls.io/repos/github/mencosk/soap/badge.svg)](https://coveralls.io/github/mencosk/soap)
 
 Simple HTTP SOAP client package for Go. We solve common problem of consuming a SOAP-based web service, in distributed systems and application architecture so you can focus on delivering business value.
 

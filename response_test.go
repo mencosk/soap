@@ -51,6 +51,13 @@ func TestResponse_PayloadResponse(t *testing.T) {
 		receivedAt:      time.Time{},
 	}
 
+	test2Fields := fields{
+		Request:         testRequest,
+		RawResponse:     nil,
+		payloadResponse: []byte{},
+		receivedAt:      time.Time{},
+	}
+
 	tests := []struct {
 		name   string
 		fields fields
@@ -60,6 +67,11 @@ func TestResponse_PayloadResponse(t *testing.T) {
 			name:   "Test Retrieve Payload Response",
 			fields: testFields,
 			want:   []byte(response),
+		},
+		{
+			name:   "Test Retrieve Payload Response empty",
+			fields: test2Fields,
+			want:   []byte{},
 		},
 	}
 	for _, tt := range tests {
@@ -350,6 +362,14 @@ func TestResponse_Status(t *testing.T) {
 	}
 	testFields.RawResponse.Status = "200"
 
+	test2Fields := fields{
+		Request:         testRequest,
+		RawResponse:     nil,
+		payloadResponse: []byte(textResponse),
+		receivedAt:      testTime,
+	}
+	//test2Fields.RawResponse.Status = string("")
+
 	tests := []struct {
 		name   string
 		fields fields
@@ -359,6 +379,11 @@ func TestResponse_Status(t *testing.T) {
 			name:   "Test Retrieve Status",
 			fields: testFields,
 			want:   "200",
+		},
+		{
+			name:   "Test Retrieve Status empty",
+			fields: test2Fields,
+			want:   "",
 		},
 	}
 	for _, tt := range tests {
@@ -437,6 +462,15 @@ func TestResponse_StatusCode(t *testing.T) {
 	}
 	test2Fields.RawResponse.StatusCode = http.StatusAccepted
 
+	// 2. Test Status Code 0
+	test3Fields := fields{
+		Request:         testRequest,
+		RawResponse:     nil,
+		payloadResponse: []byte(textResponse),
+		receivedAt:      testTime,
+	}
+	test2Fields.RawResponse.StatusCode = http.StatusAccepted
+
 	tests := []struct {
 		name   string
 		fields fields
@@ -451,6 +485,11 @@ func TestResponse_StatusCode(t *testing.T) {
 			name:   "Test Retrieve StatusCode 202",
 			fields: test2Fields,
 			want:   http.StatusAccepted,
+		},
+		{
+			name:   "Test Retrieve StatusCode 0",
+			fields: test3Fields,
+			want:   0,
 		},
 	}
 	for _, tt := range tests {

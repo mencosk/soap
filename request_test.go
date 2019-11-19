@@ -629,15 +629,25 @@ func Test_getPointer(t *testing.T) {
 		v: &DummyRequest{},
 	}
 
+	testType := DummyRequest{}
+	test2Args := args{
+		v: testType,
+	}
+
 	tests := []struct {
 		name string
 		args args
 		want interface{}
 	}{
 		{
-			name: "Test getPointer function",
+			name: "Test getPointer function with Ptr",
 			args: testArgs,
 			want: &DummyRequest{},
+		},
+		{
+			name: "Test getPointer function without Ptr",
+			args: test2Args,
+			want: &testType,
 		},
 	}
 	for _, tt := range tests {
