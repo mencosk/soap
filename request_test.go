@@ -43,7 +43,7 @@ func TestRequest_Call(t *testing.T) {
 					   </soapenv:Body>
 					</soapenv:Envelope>`
 
-	flds := fields{
+	testFields := fields{
 		Url:             "http://127.0.0.1:3000/test",
 		Header:          headers,
 		PayloadRequest:  &request,
@@ -72,6 +72,17 @@ func TestRequest_Call(t *testing.T) {
 		receivedAt:      time.Time{},
 	}
 
+	test2Fields := fields{
+		Url:             "http://127.0.0.3000:3000/test",
+		Header:          headers,
+		PayloadRequest:  &request,
+		PayloadResponse: &response,
+		PayloadFault:    &fault,
+		RawRequest:      nil,
+		client:          client,
+		Time:            time.Time{},
+	}
+
 	tests := []struct {
 		name    string
 		fields  fields
@@ -79,10 +90,16 @@ func TestRequest_Call(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "Create Request and validate Response",
-			fields:  flds,
+			name:    "Test Request and validate Response",
+			fields:  testFields,
 			want:    resp,
 			wantErr: false,
+		},
+		{
+			name:    "Test Request with wrong url",
+			fields:  test2Fields,
+			want:    resp,
+			wantErr: true,
 		},
 	}
 	for _, tt := range tests {
@@ -103,8 +120,10 @@ func TestRequest_Call(t *testing.T) {
 				t.Errorf("Call() error = %v, wantErr %v", err, tt.wantErr)
 				return
 			}
-			if !reflect.DeepEqual(got.PayloadResult(), tt.want.PayloadResult()) {
-				t.Errorf("Call() got = %v, want %v", got, tt.want)
+			if err == nil {
+				if !reflect.DeepEqual(got.PayloadResult(), tt.want.PayloadResult()) {
+					t.Errorf("Call() got = %v, want %v", got, tt.want)
+				}
 			}
 		})
 	}

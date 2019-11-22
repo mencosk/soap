@@ -194,7 +194,7 @@ func (r *Request) Call() (*Response, error) {
 	resp, err := r.client.httpClient.Do(req)
 	endTime := time.Now()
 	if err != nil {
-		log.Fatalf("failed to send request %s", err)
+		// failed to send request
 		return nil, err
 	}
 
